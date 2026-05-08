@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Convocatoria Food Trucks — Campamento UPCI Florida</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #C9922A;
+      --gold-light: #E8B84B;
+      --dark: #0F0E0C;
+      --dark-2: #1A1915;
+      --cream: #F5F0E8;
+      --cream-2: #EDE7D9;
+      --text: #2C2B28;
+      --text-muted: #7A7468;
+      --border: rgba(201,146,42,0.25);
+      --radius: 4px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .hero {
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+      padding: 64px 24px 56px;
+      text-align: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 0%, rgba(201,146,42,0.18) 0%, transparent 70%),
+        repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(201,146,42,0.04) 40px, rgba(201,146,42,0.04) 41px);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .hero h1 span { color: var(--gold-light); }
+    .hero-sub {
+      font-size: 15px;
+      color: rgba(245,240,232,0.6);
+      font-weight: 300;
+      margin-top: 14px;
+      letter-spacing: 0.3px;
+    }
+    .hero-location {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .form-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .form-section { margin-bottom: 48px; }
+
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 540px) { .field-row { grid-template-columns: 1fr; } }
+
+    .field { margin-bottom: 20px; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    label .req { color: var(--gold); margin-left: 3px; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      background: white;
+      border: 1.5px solid var(--cream-2);
+      border-radius: var(--radius);
+      padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,146,42,0.12);
+    }
+    input::placeholder, textarea::placeholder { color: #C0B9AE; }
+    textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9922A' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+      cursor: pointer;
+    }
+
+    /* RADIO */
+    .radio-group { display: flex; gap: 12px; }
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1.5px solid var(--cream-2);
+      border-radius: var(--radius);
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
+      flex: 1;
+      justify-content: center;
+    }
+    .radio-item:hover { border-color: var(--gold-light); }
+    .radio-item input[type="radio"] { width: 17px; height: 17px; min-width: 17px; accent-color: var(--gold); cursor: pointer; }
+    .radio-item:has(input:checked) { border-color: var(--gold); background: rgba(201,146,42,0.06); }
+    .radio-label { font-size: 15px; color: var(--text-muted); font-weight: 500; text-transform: none; letter-spacing: 0; }
+    .radio-item:has(input:checked) .radio-label { color: var(--text); font-weight: 600; }
+
+    #ext-count-wrap { display: none; margin-top: 14px; }
+
+    /* CHECKBOXES */
+    .check-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 400px) { .check-group { grid-template-columns: 1fr; } }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      border: 1.5px solid var(--cream-2);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
+    }
+    .check-item:hover { border-color: var(--gold-light); }
+    .check-item input[type="checkbox"] { width: 17px; height: 17px; min-width: 17px; accent-color: var(--gold); cursor: pointer; }
+    .check-item:has(input:checked) { border-color: var(--gold); background: rgba(201,146,42,0.05); }
+    .check-label { font-size: 14px; color: var(--text-muted); line-height: 1.2; text-transform: none; letter-spacing: 0; font-weight: 400; }
+    .check-item:has(input:checked) .check-label { color: var(--text); font-weight: 600; }
+    .check-label small { display: block; font-size: 11px; color: #B0A898; margin-top: 2px; font-weight: 400; }
+
+    /* UPLOAD */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      text-align: center;
+      background: white;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .upload-zone:hover { border-color: var(--gold); background: rgba(201,146,42,0.03); }
+    .upload-zone input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: none; padding: 0; box-shadow: none; }
+    .upload-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+    .upload-label-text { font-size: 13px; font-weight: 600; color: var(--text); display: block; margin-bottom: 4px; }
+    .upload-hint { font-size: 11px; color: var(--text-muted); }
+    .upload-filename { display: none; margin-top: 10px; font-size: 12px; color: var(--gold); font-weight: 500; }
+
+    /* NOTICE */
+    .notice {
+      background: rgba(201,146,42,0.08);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 14px 18px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .notice strong { color: var(--gold); }
+
+    /* AGREEMENT */
+    .agreement-box {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: 32px;
+      margin-bottom: 16px;
+      font-size: 13.5px;
+      line-height: 1.8;
+      color: var(--text);
+      max-height: 440px;
+      overflow-y: auto;
+    }
+    .agreement-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 4px;
+      text-align: center;
+    }
+    .agreement-box .ag-subtitle {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    .agreement-box h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 22px 0 8px;
+    }
+    .agreement-box p { margin-bottom: 8px; }
+    .agreement-box ul { padding-left: 20px; margin-bottom: 8px; }
+    .agreement-box ul li { margin-bottom: 5px; }
+    .agreement-box::-webkit-scrollbar { width: 5px; }
+    .agreement-box::-webkit-scrollbar-track { background: var(--cream-2); border-radius: 3px; }
+    .agreement-box::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    .scroll-hint { text-align: center; font-size: 11px; color: var(--text-muted); margin-bottom: 12px; font-style: italic; }
+
+    /* FIRMA */
+    .firma-wrap {
+      background: white;
+      border: 1.5px solid var(--cream-2);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .firma-accept {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 22px;
+      cursor: pointer;
+    }
+    .firma-accept input[type="checkbox"] { width: 20px; height: 20px; min-width: 20px; margin-top: 3px; accent-color: var(--gold); cursor: pointer; }
+    .firma-accept-text { font-size: 14px; line-height: 1.65; color: var(--text); text-transform: none; letter-spacing: 0; font-weight: 400; }
+    .firma-accept-text strong { color: var(--dark); }
+
+    .firma-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 540px) { .firma-fields { grid-template-columns: 1fr; } }
+
+    .firma-date-display {
+      width: 100%;
+      background: var(--cream);
+      border: 1.5px solid var(--cream-2);
+      border-radius: var(--radius);
+      padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    /* SUBMIT */
+    .submit-wrap { text-align: center; padding-top: 8px; }
+    .btn-submit {
+      background: var(--gold);
+      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: var(--radius);
+      padding: 18px 52px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(201,146,42,0.3);
+    }
+    .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 28px rgba(201,146,42,0.4); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .submit-note { font-size: 12px; color: var(--text-muted); margin-top: 14px; }
+
+    /* SUCCESS */
+    #success-msg { display: none; text-align: center; padding: 60px 24px; }
+    #success-msg .success-icon { font-size: 52px; margin-bottom: 16px; }
+    #success-msg h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--dark); margin-bottom: 10px; }
+    #success-msg p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+
+    .footer {
+      background: var(--dark-2);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 12px;
+      color: rgba(245,240,232,0.35);
+      letter-spacing: 0.5px;
+    }
+    .footer span { color: var(--gold); opacity: 0.7; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-badge">Convocatoria Oficial · 2026</div>
+    <h1>Campamento Anual<br><span>Ministerios Hispanos</span></h1>
+    <p class="hero-sub">United Pentecostal Church International UPCI</p>
+    <div class="hero-location">
+      <svg width="13" height="15" viewBox="0 0 13 15" fill="none"><path d="M6.5 0C4.015 0 2 2.015 2 4.5c0 3.375 4.5 8.75 4.5 8.75S11 7.875 11 4.5C11 2.015 8.985 0 6.5 0Zm0 6.25a1.75 1.75 0 1 1 0-3.5 1.75 1.75 0 0 1 0 3.5Z" fill="currentColor"/></svg>
+      5011 NW Gainesville Rd, Ocala, FL 34475 &nbsp;·&nbsp; 30–31 Jul y 1 Ago, 2026
+    </div>
+  </header>
+
+  <main class="form-wrap">
+
+    <div class="notice">
+      <strong>¿Tienes un food truck?</strong> Queremos que seas parte de nuestro campamento. Completa este formulario y nuestro equipo se comunicará contigo para confirmar tu participación. Los cupos son <strong>limitados</strong>.
+    </div>
+
+    <div id="success-msg">
+      <div class="success-icon">🎉</div>
+      <h2>¡Solicitud enviada!</h2>
+      <p>Gracias por tu interés en participar en el Campamento Anual.<br>Nuestro equipo revisará tu solicitud y se comunicará contigo pronto.</p>
+    </div>
+
+    <form id="truck-form" action="https://formspree.io/f/xpqbjoyn" method="POST" enctype="multipart/form-data">
+
+      <!-- 1. INFORMACIÓN DEL NEGOCIO -->
+      <div class="form-section">
+        <div class="section-label">Información del Negocio</div>
+
+        <div class="field">
+          <label>Nombre del Food Truck <span class="req">*</span></label>
+          <input type="text" name="nombre_foodtruck" placeholder="Ej. El Sabor de Abuela" required />
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Instagram</label>
+            <input type="text" name="instagram" placeholder="@tunegocio" />
+          </div>
+          <div class="field">
+            <label>Página Web</label>
+            <input type="url" name="pagina_web" placeholder="https://..." />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Descripción del Food Truck <span class="req">*</span></label>
+          <textarea name="descripcion" placeholder="Describe brevemente tu propuesta gastronómica, especialidades, estilo de cocina…" required></textarea>
+        </div>
+      </div>
+
+      <!-- 2. RESPONSABLE LEGAL -->
+      <div class="form-section">
+        <div class="section-label">Responsable Legal</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Nombre Completo <span class="req">*</span></label>
+            <input type="text" name="responsable_nombre" placeholder="Nombre y apellido" required />
+          </div>
+          <div class="field">
+            <label>Teléfono <span class="req">*</span></label>
+            <input type="tel" name="responsable_telefono" placeholder="(000) 000-0000" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Correo Electrónico <span class="req">*</span></label>
+          <input type="email" name="responsable_email" placeholder="correo@ejemplo.com" required />
+        </div>
+      </div>
+
+      <!-- 3. TIPO DE SERVICIO -->
+      <div class="form-section">
+        <div class="section-label">Tipo de Servicio</div>
+
+        <div class="field">
+          <label>¿En qué tiempos de comida participarías? <span class="req">*</span></label>
+          <div class="check-group">
+            <label class="check-item">
+              <input type="checkbox" name="servicio" value="desayuno" />
+              <span class="check-label">🌅 Desayuno<small>Mañana</small></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="servicio" value="almuerzo" />
+              <span class="check-label">☀️ Almuerzo<small>Mediodía</small></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="servicio" value="cena" />
+              <span class="check-label">🌙 Cena / Noche<small>9 PM – 12 AM</small></span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="servicio" value="postres" />
+              <span class="check-label">🍰 Postres<small>Todo el día</small></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Tipo de Cocina / Especialidad <span class="req">*</span></label>
+          <select name="tipo_cocina" required>
+            <option value="" disabled selected>Selecciona una categoría…</option>
+            <option>Comida Latinoamericana</option>
+            <option>Comida Americana</option>
+            <option>Comida Mexicana</option>
+            <option>Mariscos / Seafood</option>
+            <option>BBQ / Parrilla</option>
+            <option>Vegana / Vegetariana</option>
+            <option>Postres / Repostería</option>
+            <option>Bebidas / Jugos</option>
+            <option>Otro</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Descripción del Menú <span class="req">*</span></label>
+          <textarea name="menu" placeholder="Lista los platos o productos principales que ofrecerías en el evento…" required></textarea>
+        </div>
+      </div>
+
+      <!-- 4. DOCUMENTOS Y REQUISITOS -->
+      <div class="form-section">
+        <div class="section-label">Documentos y Requisitos</div>
+
+        <div class="notice">
+          Adjunta los siguientes documentos. Formatos aceptados: <strong>PDF, JPG, PNG</strong>. Máximo 10MB por archivo.
+        </div>
+
+        <div class="field">
+          <label>Licencia MFDV / DBPR Vigente <span class="req">*</span></label>
+          <div class="upload-zone">
+            <input type="file" name="licencia_mfdv" accept=".pdf,.jpg,.jpeg,.png" onchange="showFile(this,'file-mfdv')" required />
+            <span class="upload-icon">📄</span>
+            <span class="upload-label-text">Subir licencia MFDV</span>
+            <span class="upload-hint">Licencia activa emitida por el DBPR del Estado de Florida</span>
+            <span class="upload-filename" id="file-mfdv"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Certificate of Insurance (COI) — General Liability <span class="req">*</span></label>
+          <div class="upload-zone">
+            <input type="file" name="coi_insurance" accept=".pdf,.jpg,.jpeg,.png" onchange="showFile(this,'file-coi')" required />
+            <span class="upload-icon">🛡️</span>
+            <span class="upload-label-text">Subir certificado de seguro</span>
+            <span class="upload-hint">Mín. $1M por ocurrencia / $2M agregado · United Pentecostal Church International UPCI como Additional Insured</span>
+            <span class="upload-filename" id="file-coi"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Foto del Food Truck <span class="req">*</span></label>
+          <div class="upload-zone">
+            <input type="file" name="foto_truck" accept=".jpg,.jpeg,.png" onchange="showFile(this,'file-truck')" required />
+            <span class="upload-icon">🚚</span>
+            <span class="upload-label-text">Subir foto del truck</span>
+            <span class="upload-hint">Foto exterior donde se aprecie el nombre y estilo del negocio</span>
+            <span class="upload-filename" id="file-truck"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Foto del Menú <span class="req">*</span></label>
+          <div class="upload-zone">
+            <input type="file" name="foto_menu" accept=".pdf,.jpg,.jpeg,.png" onchange="showFile(this,'file-menu-img')" required />
+            <span class="upload-icon">🍽️</span>
+            <span class="upload-label-text">Subir foto o imagen del menú</span>
+            <span class="upload-hint">Menú físico, diseño digital o captura de pantalla clara y legible</span>
+            <span class="upload-filename" id="file-menu-img"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>¿Cuenta el food truck con extintores Clase K y ABC a bordo? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-item">
+              <input type="radio" name="tiene_extintores" value="si" onchange="toggleExtCount(true)" required />
+              <span class="radio-label">✅ Sí</span>
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="tiene_extintores" value="no" onchange="toggleExtCount(false)" />
+              <span class="radio-label">❌ No</span>
+            </label>
+          </div>
+          <div id="ext-count-wrap">
+            <label style="margin-top:14px; margin-bottom:8px; display:block;">¿Cuántos extintores tiene a bordo?</label>
+            <input type="number" name="cantidad_extintores" min="1" max="20" placeholder="Ej. 2" style="max-width:160px;" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. INFORMACIÓN ADICIONAL -->
+      <div class="form-section">
+        <div class="section-label">Información Adicional</div>
+
+        <div class="field">
+          <label>¿Necesitas conexión eléctrica?</label>
+          <select name="electricidad">
+            <option value="no">No, soy autosuficiente / uso generador propio</option>
+            <option value="si_110">Sí — 110V (estándar)</option>
+            <option value="si_220">Sí — 220V</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Comentarios o preguntas</label>
+          <textarea name="comentarios" placeholder="¿Algo más que quieras hacernos saber?"></textarea>
+        </div>
+      </div>
+
+      <!-- 6. ACUERDO DE PARTICIPACIÓN -->
+      <div class="form-section">
+        <div class="section-label">Acuerdo de Participación</div>
+
+        <p class="scroll-hint">Por favor lee el acuerdo completo antes de firmar ↓</p>
+
+        <div class="agreement-box">
+          <h3>ACUERDO DE PARTICIPACIÓN Y DESCARGO DE RESPONSABILIDAD</h3>
+          <p class="ag-subtitle">
+            Campamento Anual · Ministerios Hispanos de Florida<br>
+            United Pentecostal Church International UPCI<br>
+            30 y 31 de julio y 1 de agosto de 2026<br>
+            5011 NW Gainesville Rd, Ocala, FL 34475
+          </p>
+
+          <h4>1. Partes</h4>
+          <p>Este acuerdo es entre <strong>United Pentecostal Church International UPCI</strong> (en adelante "la Organización") y el operador del food truck identificado en este formulario (en adelante "el Vendor").</p>
+
+          <h4>2. Participación</h4>
+          <p>La participación en el Campamento Anual es <strong>gratuita</strong> para el Vendor. Este acuerdo establece los términos, condiciones y responsabilidades que el Vendor acepta al solicitar y confirmar su participación. La confirmación de participación queda sujeta a aprobación por parte de la Organización.</p>
+
+          <h4>3. Horarios de Operación</h4>
+          <p>El Vendor podrá operar <strong>únicamente</strong> en los siguientes horarios:</p>
+          <ul>
+            <li><strong>Jueves 30 de julio:</strong> 4:00 PM – 7:00 PM &nbsp;|&nbsp; 9:00 PM – 12:00 AM</li>
+            <li><strong>Viernes 31 de julio:</strong> 7:00 AM – 9:00 AM &nbsp;|&nbsp; 1:00 PM – 7:00 PM &nbsp;|&nbsp; 9:00 PM – 12:00 AM</li>
+            <li><strong>Sábado 1 de agosto:</strong> 7:00 AM – 9:00 AM</li>
+          </ul>
+          <p>Queda <strong>estrictamente prohibido</strong> operar fuera de estos horarios. El Vendor deberá cesar operaciones durante los servicios religiosos y demás actividades programadas del evento. La Organización notificará con antelación cualquier ajuste necesario de agenda.</p>
+
+          <h4>4. Reglas de Operación en el Campground</h4>
+          <ul>
+            <li><strong>Prohibido</strong> vender, distribuir u ofrecer bebidas alcohólicas de cualquier tipo.</li>
+            <li><strong>Prohibido</strong> reproducir música o cualquier tipo de audio amplificado desde el truck o área adyacente.</li>
+            <li>Se <strong>permite</strong> el uso de sillas y mesas propias para acomodar a los clientes en el área asignada.</li>
+            <li>Se <strong>permite</strong> el uso de generadores eléctricos propios, operados con seguridad y responsabilidad.</li>
+            <li>El Vendor es <strong>responsable del manejo completo de sus desechos</strong>: residuos de cocina, aceites, empaques y basura generada en su área. Deberá mantener su espacio limpio durante todo el evento y retirar o depositar sus desechos al finalizar cada jornada en los puntos indicados por la Organización.</li>
+            <li>El Vendor deberá respetar el espacio asignado y no interferir con otras operaciones del evento.</li>
+            <li>El comportamiento del Vendor y su personal deberá estar alineado con los valores y el ambiente del evento en todo momento.</li>
+          </ul>
+
+          <h4>5. Requisitos de Cumplimiento Legal</h4>
+          <p>El Vendor declara bajo su responsabilidad que:</p>
+          <ul>
+            <li>Posee una licencia MFDV/DBPR vigente y en regla al momento del evento.</li>
+            <li>Cuenta con póliza de General Liability Insurance con mínimo <strong>$1,000,000 por ocurrencia</strong> y <strong>$2,000,000 en cobertura agregada</strong>, con United Pentecostal Church International UPCI designada como Additional Insured.</li>
+            <li>Cuenta con extintores Clase K y ABC dentro del truck en condiciones operativas.</li>
+            <li>Cumple con todas las regulaciones del Estado de Florida aplicables a su operación.</li>
+          </ul>
+
+          <h4>6. Descargo de Responsabilidad</h4>
+          <p>La Organización no será responsable por:</p>
+          <ul>
+            <li>Daños, pérdidas o robos al equipo, vehículo, inventario o propiedad del Vendor.</li>
+            <li>Accidentes o lesiones que ocurran dentro o en las inmediaciones del truck del Vendor.</li>
+            <li>Pérdidas económicas del Vendor, incluyendo bajas ventas o condiciones climáticas.</li>
+            <li>Incidentes causados por el incumplimiento del Vendor de las normas aquí establecidas.</li>
+          </ul>
+
+          <h4>7. Indemnización</h4>
+          <p>El Vendor se compromete a indemnizar, defender y mantener libre de responsabilidad a la Organización, sus directivos, pastores y voluntarios, frente a cualquier reclamación, demanda, daño o gasto —incluyendo honorarios legales— que surja de las operaciones del Vendor durante el evento.</p>
+
+          <h4>8. Cargo por Incumplimiento</h4>
+          <p>Dado que la participación es gratuita y la aprobación implica el cierre de oportunidades para otros interesados, el Vendor que no se presente al evento sin cancelación previa válida quedará sujeto a un <strong>cargo por incumplimiento de $500.00 USD</strong>.</p>
+          <p>Se considerará cancelación válida —sin penalización— aquella notificada con al menos <strong>7 días calendario de anticipación</strong> al inicio del evento, mediante comunicación escrita al correo oficial de la Organización. El cargo por incumplimiento deberá liquidarse dentro de los <strong>30 días</strong> siguientes a la notificación formal emitida por la Organización. El Vendor autoriza a la Organización a emitir la factura correspondiente en caso de incumplimiento.</p>
+
+          <h4>9. Validez de la Firma Electrónica</h4>
+          <p>La firma electrónica registrada en este formulario tiene plena validez legal bajo el <em>Electronic Signatures in Global and National Commerce Act (E-Sign Act, 15 U.S.C. § 7001)</em> de los Estados Unidos. Al firmar, el Vendor confirma que ha leído, comprendido y acepta la totalidad de los términos de este acuerdo, y que tiene autoridad legal para comprometer al negocio que representa.</p>
+        </div>
+
+        <!-- FIRMA DIGITAL -->
+        <div class="firma-wrap">
+          <label class="firma-accept">
+            <input type="checkbox" name="acepta_acuerdo" value="si" id="chk-acuerdo" required />
+            <span class="firma-accept-text">
+              He leído y acepto en su totalidad el <strong>Acuerdo de Participación y Descargo de Responsabilidad</strong> del Campamento Anual 2026 de United Pentecostal Church International UPCI, incluyendo el <strong>cargo por incumplimiento de $500.00 USD</strong> en caso de no presentarme sin cancelación escrita con al menos 7 días de anticipación.
+            </span>
+          </label>
+
+          <div class="firma-fields">
+            <div class="field" style="margin-bottom:0;">
+              <label>Firma — Nombre del Representante Legal <span class="req">*</span></label>
+              <input type="text" name="firma_nombre" id="firma-nombre" placeholder="Escribe tu nombre completo" required />
+              <p style="font-size:11px; color:var(--text-muted); margin-top:6px; text-transform:none; letter-spacing:0; font-weight:400;">Tu nombre escrito constituye tu firma electrónica legalmente válida.</p>
+            </div>
+            <div class="field" style="margin-bottom:0;">
+              <label>Fecha de Firma</label>
+              <div class="firma-date-display" id="firma-fecha-display"></div>
+              <input type="hidden" name="fecha_firma" id="fecha-firma-hidden" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="submit-wrap">
+        <button type="submit" class="btn-submit">Enviar Solicitud</button>
+        <p class="submit-note">Al enviar confirmas que toda la información proporcionada es veraz y que aceptas los términos del acuerdo.</p>
+      </div>
+
+    </form>
+  </main>
+
+  <footer class="footer">
+    <span>United Pentecostal Church International UPCI</span> · Ministerios Hispanos · Campamento Anual 2026
+  </footer>
+
+  <script>
+    // Auto-set today's date
+    const today = new Date();
+    const fechaStr = today.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('firma-fecha-display').textContent = fechaStr;
+    document.getElementById('fecha-firma-hidden').value = fechaStr;
+
+    function showFile(input, labelId) {
+      const label = document.getElementById(labelId);
+      if (input.files && input.files[0]) {
+        label.textContent = '✓ ' + input.files[0].name;
+        label.style.display = 'block';
+      }
+    }
+
+    function toggleExtCount(show) {
+      document.getElementById('ext-count-wrap').style.display = show ? 'block' : 'none';
+    }
+
+    document.getElementById('truck-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      // Validate service checkboxes
+      const checked = this.querySelectorAll('input[name="servicio"]:checked');
+      if (checked.length === 0) {
+        alert('Por favor selecciona al menos un tiempo de comida en que participarías.');
+        return;
+      }
+
+      // Validate agreement
+      if (!document.getElementById('chk-acuerdo').checked) {
+        alert('Debes aceptar el Acuerdo de Participación para continuar.');
+        return;
+      }
+
+      // Validate signature
+      if (!document.getElementById('firma-nombre').value.trim()) {
+        alert('Por favor escribe tu nombre como firma digital del acuerdo.');
+        return;
+      }
+
+      // Warn if no extintores
+      const extNo = this.querySelector('input[name="tiene_extintores"][value="no"]:checked');
+      if (extNo) {
+        const ok = window.confirm('Indicaste que el truck NO cuenta con extintores Clase K y ABC. Este es un requisito de seguridad obligatorio para participar. ¿Deseas enviar la solicitud de todas formas?');
+        if (!ok) return;
+      }
+
+      const btn = this.querySelector('.btn-submit');
+      btn.textContent = 'Enviando…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(this.action, {
+          method: 'POST',
+          body: new FormData(this),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          this.style.display = 'none';
+          document.getElementById('success-msg').style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          btn.textContent = 'Enviar Solicitud';
+          btn.disabled = false;
+          alert('Hubo un error al enviar. Por favor intenta de nuevo.');
+        }
+      } catch (err) {
+        btn.textContent = 'Enviar Solicitud';
+        btn.disabled = false;
+        alert('Error de conexión. Verifica tu internet e intenta de nuevo.');
+      }
+    });
+  </script>
+</body>
+</html>
